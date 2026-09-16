@@ -1,0 +1,6 @@
+How to Activate It on Mobile
+​Run the script inside your mobile Python app (Pythonista/Pyto on iOS, Pydroid 3/Termux on Android).
+​Configure Mobile System Proxy:
+​iPhone (iOS): Go to Settings \rightarrow Wi-Fi \rightarrow Tap your network's (i) icon \rightarrow Scroll down to Configure Proxy \rightarrow Select Manual \rightarrow Set Server to 127.0.0.1 and Port to 8080.
+​Android: Go to Settings \rightarrow Network & Internet \rightarrow Wi-Fi \rightarrow Modify Network \rightarrow Advanced \rightarrow Proxy to Manual \rightarrow Set Hostname to 127.0.0.1 and Port to 8080.
+​Once activated, your python script running in the mobile terminal handles all background traffic routing, randomly tossing your connection to a different side of the planet on your defined schedule.
