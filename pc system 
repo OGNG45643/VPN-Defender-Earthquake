@@ -1,0 +1,95 @@
+Prerequisites
+Install OpenVPN on your machine:
+Linux: sudo apt install openvpn
+macOS: brew install openvpn
+Download .ovpn configuration files from your preferred privacy-focused VPN provider (e.g., Mullvad, ProtonVPN, NordVPN) and save them into a directory named ./vpn_configs/.
+Python Randomized VPN Defense
+
+#Insert
+
+import os
+import random
+import subprocess
+import time
+from pathlib import Path
+
+CONFIG_DIR = Path("./vpn_configs")
+INTERVAL_MIN_MINUTES = 5
+INTERVAL_MAX_MINUTES = 15
+
+def get_vpn_configs():
+    """Retrieve all available OpenVPN configuration files."""
+    configs = list(CONFIG_DIR.glob("*.ovpn"))
+    if not configs:
+        raise FileNotFoundError(
+            f"No .ovpn files found in {CONFIG_DIR.resolve()}. "
+            "Please add server configuration files to this directory."
+        )
+    return configs
+
+def disconnect_active_vpn():
+    """Kill any running openvpn processes."""
+    print("[*] Terminating existing VPN connections...")
+    subprocess.run(["sudo", "pkill", "-f", "openvpn"], stderr=subprocess.DEVNULL)
+    time.sleep(2)
+
+def connect_to_vpn(config_path):
+    """Initiate an OpenVPN connection in a detached process."""
+    print(f"[+] Throwing location to: {config_path.stem}")
+    cmd = ["sudo", "openvpn", "--config", str(config_path)]
+    
+    # Launch OpenVPN process non-blocking
+    process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    return process
+
+def main():
+    print("=== GLOBAL VPN PRIVACY DEFENSE SYSTEM INITIALIZED ===")
+    
+    current_config = None
+    
+    try:
+        while True:
+            configs = get_vpn_configs()
+            
+            # Pick a random location distinct from the current one
+            available = [c for c in configs if c != current_config]
+            target_config = random.choice(available if available else configs)
+            current_config = target_config
+            
+            # Reset connection
+            disconnect_active_vpn()
+            connect_to_vpn(target_config)
+            
+            # Wait for connection handshake
+            time.sleep(10)
+            print(f"[✓] Active Defense established via {target_config.name}")
+            
+            # Randomize rotation interval to defeat timing correlation attacks
+            sleep_duration = random.randint(
+                INTERVAL_MIN_MINUTES * 60, 
+                INTERVAL_MAX_MINUTES * 60
+            )
+            print(f"[*] Next location hop in {sleep_duration // 60} minutes...\n")
+            time.sleep(sleep_duration)
+
+    except KeyboardInterrupt:
+        print("\n[!] Disabling Privacy Defense System...")
+        disconnect_active_vpn()
+        print("[✓] Restored native system networking.")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+Key Security & Operational Details
+​Randomized Intervals: The script varies time intervals between hops (5 to 15 minutes by default) to prevent statistical timing correlation.
+​Privileges: Must be executed with root/sudo rights (sudo python3 vpn_defense.py) to allow OpenVPN to alter system routing tables and Network Interfaces.
+​Authentication: If your .ovpn profiles require username/password authentication, add --auth-user-pass credentials.txt into the OpenVPN invocation command inside connect_to_vpn().
