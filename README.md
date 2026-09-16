@@ -1,4 +1,6 @@
 # VPN-Defender-Earthquake
+<img width="1024" height="559" alt="image_98ba175b-07a2-4be9-b175-347ad1a2d3f6" src="https://github.com/user-attachments/assets/65071fca-6301-4901-b0fe-05ae717e13cc" />
+
 Shakes the attackers ground and throws there devices back to the other side of the planet via VPN.
 
 defeat dynamic network profiling and regional tracking, a solid privacy defense system needs to continuously auto-rotate VPN connections across globally diverse regions on a randomized schedule.
@@ -187,3 +189,4 @@ How to Activate It on Mobile
 ​iPhone (iOS): Go to Settings \rightarrow Wi-Fi \rightarrow Tap your network's (i) icon \rightarrow Scroll down to Configure Proxy \rightarrow Select Manual \rightarrow Set Server to 127.0.0.1 and Port to 8080.
 ​Android: Go to Settings \rightarrow Network & Internet \rightarrow Wi-Fi \rightarrow Modify Network \rightarrow Advanced \rightarrow Proxy to Manual \rightarrow Set Hostname to 127.0.0.1 and Port to 8080.
 ​Once activated, your python script running in the mobile terminal handles all background traffic routing, randomly tossing your connection to a different side of the planet on your defined schedule.
+<img width="1024" height="559" alt="image_91902687-ef26-4196-b6c0-35c666e905c3" src="https://github.com/user-attachments/assets/331925fc-032b-4657-b35c-65d35e1dbdb6" />
